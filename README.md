@@ -26,7 +26,7 @@ For each entry in your list, peruse the String class documentation and try to fi
 String comparison is string.compareTo(), string copy is string.copyValueOf(), parsing from string to int is Integer.parseInt(n), and iterating through strings is to use charAt(i). 
 
 ### Part 2.2: Iceberg, Right Head!
-
+ 
 2. You may have noticed that there is an equals(obj) method of the string class! Try replacing all the uses of == with appropriate invocations of the equals method (does it matter which of the two strings you call equals on?). Do you obtain the results that you were expecting now? Based on your results, complete the following sentence:
 
 To compare two strings for equality, we must use the equals(obj) method of the string class because they'll compare the actual content of the strings and not simply their locations in memory (like the == method).

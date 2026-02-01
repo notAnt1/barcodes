@@ -1,5 +1,5 @@
 package edu.grinnell.csc207.exploration;
-
+ 
 import java.util.Scanner;
 
 public class StringExploration {
