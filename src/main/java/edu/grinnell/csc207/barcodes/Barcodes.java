@@ -93,7 +93,7 @@ public class Barcodes {
      *
      * @param code the 12-digit UPC-A code to print
      */
-    public static void PrintBarcodeRow(String code) {
+    public static void printBarcodeRow(String code) {
         int colorDigit = 1; // sets color Digit to 1 (white), since printing pattern is always white first.
         int digit;
 
