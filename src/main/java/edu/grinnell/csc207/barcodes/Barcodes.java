@@ -168,7 +168,7 @@ public class Barcodes {
         int rows = Integer.parseInt(args[1]);
 
         for (int i = 0; i < rows; i++) { // iterated over number of rows
-            PrintBarcodeRow(args[0]);
+            printBarcodeRow(args[0]);
         }
     }
 }
