@@ -89,11 +89,62 @@ public class Barcodes {
     }
 
     /**
+     * Prints a single row of the barcode for the given code.
+     *
+     * @param code the 12-digit UPC-A code to print
+     */
+    public static void PrintBarcodeRow(String code) {
+        int colorDigit = 1; // sets color Digit to 1 (white), since printing pattern is always white first.
+        int digit;
+
+        for (int k = 0; k < 2; k++) { // iterates over first 2 elements of helper patterns (9 * W and WBW)
+
+            for (int j = 0; j < HELPERS[k].length(); j++) { // iterates over each digit in the helper pattern
+                printSquare(toDigit(HELPERS[k].charAt(j)));
+            }
+        }
+
+        for (int l = 0; l < 6; l++) { // first 6 digit of the code
+            digit = toDigit(code.charAt(l));
+            for (int m = 0; m < 4; m++) { // every digit "pattern" has 4 components
+                for (int o = 0; o < ENCODINGS[digit][m]; o++) {
+                    printSquare(colorDigit % 2);
+                }
+                colorDigit++; //colorDigit becomes either even/odd, with the pattern matching b/w
+            }
+
+        }
+
+        for (int p = 0; p < HELPERS[2].length(); p++) { // middle helper bars
+            printSquare(toDigit(HELPERS[2].charAt(p)));
+        }
+
+        colorDigit = 0;
+        for (int q = 6; q < 12; q++) { //second half, everything is inverted so the pattern reverses, but same logic.
+            digit = toDigit(code.charAt(q));
+            for (int t = 0; t < 4; t++) {
+                for (int u = 0; u < ENCODINGS[digit][t]; u++) {
+                    printSquare(colorDigit % 2);
+                }
+                colorDigit++;
+            }
+
+        }
+
+        for (int r = 1; r > -1; r--) { // reprinting helper pattetns 1 and 0
+            for (int s = 0; s < HELPERS[r].length(); s++) {
+                printSquare(toDigit(HELPERS[r].charAt(s)));
+            }
+        }
+        System.out.println(""); //newline to get to new row.
+    }
+
+    /**
      * Main function—handles user input and returns error messages (no exceptions), and prints a UPC-A Barcode to the terminal
-     * dependent on user specifications (the code and the height/number of rows). 
-     * 
-     * 
-     * @param args is the string of digits to print and the number of rows. 
+     * dependent on user specifications (the code and the height/number of rows).
+     *
+     *
+     * @param args is the string of digits to print and the number of rows.
      */
     public static void main(String[] args) {
         if (args.length != 2) {
@@ -115,51 +166,9 @@ public class Barcodes {
         }
         
         int rows = Integer.parseInt(args[1]);
-        int digit;
 
         for (int i = 0; i < rows; i++) { // iterated over number of rows
-            int colorDigit = 1; // sets color Digit to 1 (white), since printing pattern is always white first.
-
-
-            for (int k = 0; k < 2; k++) { // iterates over first 2 elements of helper patterns (9 * W and WBW)
-                
-                for (int j = 0; j < HELPERS[k].length(); j++) { // iterates over each digit in the helper pattern 
-                    printSquare(toDigit(HELPERS[k].charAt(j)));
-                }
-            }
-
-            for (int l = 0; l < 6; l++) { // first 6 digit of the code
-                digit = toDigit(args[0].charAt(l));
-                for (int m = 0; m < 4; m++) { // every digit "pattern" has 4 components
-                    for (int o = 0; o < ENCODINGS[digit][m]; o++) { 
-                        printSquare(colorDigit % 2); 
-                    }
-                    colorDigit++; //colorDigit becomes either even/odd, with the pattern matching b/w
-                }
-
-            }
-
-            for (int p = 0; p < HELPERS[2].length(); p++) { // middle helper bars
-                printSquare(toDigit(HELPERS[2].charAt(p)));
-            }
-
-            colorDigit = 0;
-            for (int q = 6; q < 12; q++) { //second half, everything is inverted so the pattern reverses, but same logic.
-                digit = toDigit(args[0].charAt(q));
-                for (int t = 0; t < 4; t++) {
-                    for (int u = 0; u < ENCODINGS[digit][t]; u++) {
-                        printSquare(colorDigit % 2);
-                    }
-                    colorDigit++;
-                }
-            }
-            
-            for (int r = 1; r > -1; r--) { // reprinting helper pattetns 1 and 0
-                for (int s = 0; s < HELPERS[r].length(); s++) {
-                    printSquare(toDigit(HELPERS[r].charAt(s)));
-                }
-            }
-            System.out.println(""); //newline to get to new row.
+            PrintBarcodeRow(args[0]);
         }
     }
 }
